@@ -11,8 +11,8 @@ jobs:
           connection-string-env-var: SQL_SERVER_CONNECTION_STRING
           catalog: testing
   run-environment-var-check:
+    name: Check Environment Variable
     runs-on: windows-latest
     needs: run-sql-action
     steps:
-      name: Check Environment Variable
       - run: echo "${SQL_SERVER_CONNECTION_STRING}"
