@@ -14,5 +14,4 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: CheckVars
-      uses: actions/checkout@v2
-      run: echo "${SQL_SERVER_CONNECTION_STRING}"
+      - run: echo "${SQL_SERVER_CONNECTION_STRING}"
