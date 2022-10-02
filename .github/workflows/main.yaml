@@ -6,7 +6,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install SQL Server
-        uses: Curts0/install-sql-server-action
+        uses: Curts0/install-sql-server-action@v1.0.0
         with:
           connection-string-env-var: SQL_SERVER_CONNECTION_STRING
           catalog: testing
