@@ -15,4 +15,4 @@ jobs:
     runs-on: windows-latest
     needs: run-sql-action
     steps:
-      - run: echo "$env.GITHUB_ENV"
+      - run: env
