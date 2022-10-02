@@ -11,52 +11,56 @@ inputs:
   extra-params:
     description: Extra parameters to add to the connection string
     required: false
-runs:
-  using: "composite"
-  steps:
-    - name: Install SQL Server (Windows)
-      if: runner.os == 'Windows'
-      shell: pwsh 
-      run: |
-        # Windows SQL install via Chocolatey
-        echo "Installing SQL Server Express with Chocolatey..."
-        choco install sql-server-express --no-progress
-        echo "Setting environment variables for sqlcmd..."
-        echo "SQLCMDSERVER=.\SQLEXPRESS" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-        echo "Setting environment variable ${{ inputs.connection-string-env-var }} to SQL connection string..."
-        echo "${{ inputs.connection-string-env-var }}=Data Source=.\SQLEXPRESS;Initial Catalog=${{ inputs.catalog }};Integrated Security=True;${{ inputs.extra-params }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-    - name: Start SQL Server (Linux)
-      if: runner.os == 'Linux'              
-      shell: bash         
-      run: |
-        # Linux SQL install via Docker
-        
-        # If the password generator needs to be changed, make sure the resulting password meets SQL Server password requirements
-        sa_pw=$(uuidgen) 
-        echo "::add-mask::$sa_pw"
-        echo "Starting SQL Server in a Docker container..."
-        docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$sa_pw" -e "MSSQL_PID=Developer" -e "MSSQL_COLLATION=SQL_Latin1_General_CP1_CS_AS" -p 1433:1433 --name sqlserver -d mcr.microsoft.com/mssql/server:2017-latest
-        
-        echo "Setting environment variables for sqlcmd..."
-        echo "SQLCMDPASSWORD=$sa_pw" >> $GITHUB_ENV
-        echo "SQLCMDUSER=sa" >> $GITHUB_ENV
-        echo "SQLCMDSERVER=localhost,1433" >> $GITHUB_ENV
-        echo "Setting environment variable ${{ inputs.connection-string-env-var }} to SQL connection string..."
-        echo "${{ inputs.connection-string-env-var }}=Server=localhost;Database=${{ inputs.catalog }};User Id=sa;Password=$sa_pw;${{ inputs.extra-params }}" >> $GITHUB_ENV  
-    - name: Setup server
-      shell: pwsh
-      run: |
-        # Wait for availability then create initial catalog
-        for ($i = 1; $i -le 30; $i++) {
-          echo "Attempt $i/30 to connect to SQL Server..."
-          sqlcmd -b -Q "SELECT @@SERVERNAME as ServerName" 2>&1>$null
-          if ($?) {
-            echo "  - SQL Server is now ready"
-            break
-          } else {
-            echo "  - Not ready, sleeping for 5s"
-            Start-Sleep -seconds 5
+on: [workflow_dispatch]
+jobs:
+  install-sql-server:
+  runs-on: windows-2022
+  runs:
+    using: "composite"
+    steps:
+      - name: Install SQL Server (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh 
+        run: |
+          # Windows SQL install via Chocolatey
+          echo "Installing SQL Server Express with Chocolatey..."
+          choco install sql-server-express --no-progress
+          echo "Setting environment variables for sqlcmd..."
+          echo "SQLCMDSERVER=.\SQLEXPRESS" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+          echo "Setting environment variable ${{ inputs.connection-string-env-var }} to SQL connection string..."
+          echo "${{ inputs.connection-string-env-var }}=Data Source=.\SQLEXPRESS;Initial Catalog=${{ inputs.catalog }};Integrated Security=True;${{ inputs.extra-params }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+      - name: Start SQL Server (Linux)
+        if: runner.os == 'Linux'              
+        shell: bash         
+        run: |
+          # Linux SQL install via Docker
+          
+          # If the password generator needs to be changed, make sure the resulting password meets SQL Server password requirements
+          sa_pw=$(uuidgen) 
+          echo "::add-mask::$sa_pw"
+          echo "Starting SQL Server in a Docker container..."
+          docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$sa_pw" -e "MSSQL_PID=Developer" -e "MSSQL_COLLATION=SQL_Latin1_General_CP1_CS_AS" -p 1433:1433 --name sqlserver -d mcr.microsoft.com/mssql/server:2017-latest
+          
+          echo "Setting environment variables for sqlcmd..."
+          echo "SQLCMDPASSWORD=$sa_pw" >> $GITHUB_ENV
+          echo "SQLCMDUSER=sa" >> $GITHUB_ENV
+          echo "SQLCMDSERVER=localhost,1433" >> $GITHUB_ENV
+          echo "Setting environment variable ${{ inputs.connection-string-env-var }} to SQL connection string..."
+          echo "${{ inputs.connection-string-env-var }}=Server=localhost;Database=${{ inputs.catalog }};User Id=sa;Password=$sa_pw;${{ inputs.extra-params }}" >> $GITHUB_ENV  
+      - name: Setup server
+        shell: pwsh
+        run: |
+          # Wait for availability then create initial catalog
+          for ($i = 1; $i -le 30; $i++) {
+            echo "Attempt $i/30 to connect to SQL Server..."
+            sqlcmd -b -Q "SELECT @@SERVERNAME as ServerName" 2>&1>$null
+            if ($?) {
+              echo "  - SQL Server is now ready"
+              break
+            } else {
+              echo "  - Not ready, sleeping for 5s"
+              Start-Sleep -seconds 5
+            }
           }
-        }
-        echo "Creating initial catalog '${{ inputs.catalog }}'"
-        sqlcmd -Q "CREATE DATABASE [${{ inputs.catalog }}]"
+          echo "Creating initial catalog '${{ inputs.catalog }}'"
+          sqlcmd -Q "CREATE DATABASE [${{ inputs.catalog }}]"
