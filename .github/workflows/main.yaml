@@ -13,5 +13,5 @@ jobs:
   run-environment-var-check:
     runs-on: windows-latest
     steps:
+      - run: echo "${SQL_SERVER_CONNECTION_STRING}"
       needs: run-sql-action
-      run: echo "${SQL_SERVER_CONNECTION_STRING}"
