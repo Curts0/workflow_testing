@@ -16,4 +16,4 @@ jobs:
       - name: Check Environment Variable
       - uses: actions/checkout@v2
       - needs: run-sql-action
-      - run: echo "${SQL_SERVER_CONNECTION_STRING}"
+      run: echo "${SQL_SERVER_CONNECTION_STRING}"
