@@ -15,4 +15,4 @@ jobs:
     runs-on: windows-latest
     needs: run-sql-action
     steps:
-      - run: echo "$env.SQL_SERVER_CONNECTION_STRING"
+      - run: echo "${env.SQL_SERVER_CONNECTION_STRING}"
