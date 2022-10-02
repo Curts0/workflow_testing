@@ -1,0 +1,3 @@
+name: main
+run-name: ${{ github.actor }} triggered workflow
+on: [workflow_dispatch]
