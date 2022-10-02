@@ -2,7 +2,7 @@ name: main
 run-name: ${{ github.actor }} triggered workflow
 on: [workflow_dispatch]
 jobs:
-  test-using-other-action:
+  run-sql-action:
     runs-on: windows-latest
     steps:
       - name: Install SQL Server
@@ -10,3 +10,8 @@ jobs:
         with:
           connection-string-env-var: SQL_SERVER_CONNECTION_STRING
           catalog: testing
+  run-environment-var-check:
+    runs-on: windows-latest
+    steps:
+      - name: Check Vars
+      run: echo "${SQL_SERVER_CONNECTION_STRING}"
