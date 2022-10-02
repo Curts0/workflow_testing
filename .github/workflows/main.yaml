@@ -14,5 +14,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Check Environment Variable
-      needs: run-sql-action
-      run: echo "${SQL_SERVER_CONNECTION_STRING}"
+      - uses: actions/checkout@v2
+      - needs: run-sql-action
+      - run: echo "${SQL_SERVER_CONNECTION_STRING}"
