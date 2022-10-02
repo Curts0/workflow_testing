@@ -15,4 +15,4 @@ jobs:
     needs: run-sql-action
     steps:
       - name: Check Environment Variable
-      run: echo "${SQL_SERVER_CONNECTION_STRING}"
+      - run: echo "${SQL_SERVER_CONNECTION_STRING}"
