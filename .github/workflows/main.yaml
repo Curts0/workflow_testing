@@ -10,9 +10,5 @@ jobs:
         with:
           connection-string-env-var: SQL_SERVER_CONNECTION_STRING
           catalog: testing
-  run-environment-var-check:
-    name: Check Environment Variable
-    runs-on: windows-latest
-    needs: run-sql-action
-    steps:
-      - run: env
+      - name: Check Environment Variable
+        run: env
