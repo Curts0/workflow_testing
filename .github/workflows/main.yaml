@@ -12,3 +12,6 @@ jobs:
           catalog: testing
       - name: Check Environment Variable
         run: env
+      - name: Run Python
+      - uses: actions/setup-python@v2
+      - run: python3 -m pip install python-tabular
