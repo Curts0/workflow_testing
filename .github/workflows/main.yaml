@@ -22,4 +22,4 @@ jobs:
           python-version: 3.8
       - name: Execute Python Script # run the run.py to get the latest data
         run: |
-          python3 readfile.py $env.SQL_SERVER_CONNECTION_STRING
+          python3 readfile.py ${{env.SQL_SERVER_CONNECTION_STRING}}
