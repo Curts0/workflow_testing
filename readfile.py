@@ -5,5 +5,5 @@ def read(file_path):
         return file_str
 
 if __name__ == "__main__":
-    print(sys.arg[1])
+    print(sys.argv[1])
     read(sys.argv[1])
