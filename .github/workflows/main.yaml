@@ -12,5 +12,14 @@ jobs:
           catalog: testing
       - name: Check Environment Variable
         run: env
-      - name: Run Python
+      - name: Install PyTabular
         run: python3 -m pip install python-tabular
+      - name: Checkout Repo Content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Execute Python Script # run the run.py to get the latest data
+        run: |
+          python3 readfile.py
