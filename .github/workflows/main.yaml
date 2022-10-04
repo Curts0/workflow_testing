@@ -23,7 +23,7 @@ jobs:
       - name: Execute Python Script # run the run.py to get the latest data
         run: |
           python3 readfile.py "${{env.SQL_SERVER_CONNECTION_STRING}}"
-      - name: Set QUOTE IDENTIFIER
-        run: sqlcmd -Q "SET ANSI_NULLS, QUOTED_IDENTIFIER ON"
+      #- name: Set QUOTE IDENTIFIER
+      #  run: sqlcmd -Q "SET ANSI_NULLS, QUOTED_IDENTIFIER ON"
       - name: Run SQL File
-        run: sqlcmd -i .\adventureworks\instawdbdw.sql
+        run: sqlcmd -i .\adventureworks\instawdbdw.sql -I
