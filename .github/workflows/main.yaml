@@ -30,4 +30,4 @@ jobs:
       - name: Query New DB
         run: sqlcmd -Q "SELECT TOP 100 * FROM [AdventureWorksDW].[dbo].[FactCallCenter]"
       - name: Check Full Text Search
-        run: sqlcmd -Q "select SERVERPROPERTY('IsFullTextInstalled')""
+        run: sqlcmd -Q "select SERVERPROPERTY('IsFullTextInstalled')"
