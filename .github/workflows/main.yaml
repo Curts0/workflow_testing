@@ -24,4 +24,5 @@ jobs:
         run: |
           python3 readfile.py "${{env.SQL_SERVER_CONNECTION_STRING}}"
       - name: Run SQL File
+        run: sqlcmd -Q "SET ANSI_NULLS, QUOTED_IDENTIFIER ON"
         run: sqlcmd -i .\adventureworks\instawdbdw.sql
