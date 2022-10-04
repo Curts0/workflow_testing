@@ -2,7 +2,7 @@ name: main
 run-name: ${{ github.actor }} triggered workflow
 on: [workflow_dispatch, push]
 jobs:
-  run-sql-action:
+  AdventureWorks:
     runs-on: windows-latest
     steps:
       - name: Install SQL Server
