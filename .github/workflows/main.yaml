@@ -10,8 +10,8 @@ jobs:
         with:
           connection-string-env-var: SQL_SERVER_CONNECTION_STRING
           catalog: AdventureWorksDW
-      #- name: Check Environment Variable
-      #  run: env
+      - name: Check Environment Variable
+        run: env
       #- name: Install PyTabular
       #  run: python3 -m pip install python-tabular
       - name: Checkout Repo Content
