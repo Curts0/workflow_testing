@@ -9,21 +9,23 @@ jobs:
         uses: Curts0/install-sql-server-action@refs/heads/main
         with:
           connection-string-env-var: SQL_SERVER_CONNECTION_STRING
-          catalog: testing
-      - name: Check Environment Variable
-        run: env
-      - name: Install PyTabular
-        run: python3 -m pip install python-tabular
+          catalog: AdventureWorksDW
+      #- name: Check Environment Variable
+      #  run: env
+      #- name: Install PyTabular
+      #  run: python3 -m pip install python-tabular
       - name: Checkout Repo Content
-        uses: actions/checkout@v2 # checkout the repository content to github runner.
-      - name: setup python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Execute Python Script # run the run.py to get the latest data
-        run: |
-          python3 readfile.py "${{env.SQL_SERVER_CONNECTION_STRING}}"
+        uses: actions/checkout@v2
+      #- name: setup python
+      #  uses: actions/setup-python@v2
+      #  with:
+      #    python-version: 3.8
+      #- name: Execute Python Script # run the run.py to get the latest data
+      #  run: |
+      #    python3 readfile.py "${{env.SQL_SERVER_CONNECTION_STRING}}"
       #- name: Set QUOTE IDENTIFIER
       #  run: sqlcmd -Q "SET ANSI_NULLS, QUOTED_IDENTIFIER ON"
       - name: Run SQL File
         run: sqlcmd -i .\adventureworks\instawdbdw.sql -I
+      - name: Query New DB
+        run: sqlcmd -Q "SELECT TOP 100 * FROM [dbo].[FactCallCenter]"
