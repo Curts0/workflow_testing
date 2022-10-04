@@ -28,4 +28,4 @@ jobs:
       - name: Run SQL File
         run: sqlcmd -i .\adventureworks\instawdbdw.sql -I
       - name: Query New DB
-        run: sqlcmd -Q "SELECT TOP 100 * FROM [FactCallCenter]"
+        run: sqlcmd -Q "SELECT TOP 100 * FROM [AdventureWorksDW].[dbo].[FactCallCenter]"
