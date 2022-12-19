@@ -6,4 +6,4 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Execute Python
-    run: python3 readfile.py
+      - run: python3 readfile.py
