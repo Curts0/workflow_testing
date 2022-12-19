@@ -2,7 +2,7 @@ name: Testing Simple Yamls
 run-name: ${{ github.actor }} triggered workflow
 on: [workflow_dispatch, push]
 jobs:
-  Python Run:
+  PythonRun:
     runs-on: windows-latest
     steps:
       - name: Execute Python
