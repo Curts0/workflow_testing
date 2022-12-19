@@ -1,6 +1,6 @@
 name: main
 run-name: ${{ github.actor }} triggered workflow
-on: [workflow_dispatch, push]
+on: [workflow_dispatch]
 jobs:
   AdventureWorks:
     runs-on: windows-latest
