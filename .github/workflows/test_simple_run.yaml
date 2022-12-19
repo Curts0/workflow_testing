@@ -5,8 +5,8 @@ jobs:
   PythonRun:
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      #- name: Checkout
+      #  uses: actions/checkout@v3
       - name: Install PyTabular
         run: python3 -m pip install python-tabular
       - name: Run Python Script
