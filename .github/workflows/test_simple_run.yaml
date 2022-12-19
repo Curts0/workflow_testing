@@ -5,9 +5,14 @@ jobs:
   PythonRun:
     runs-on: windows-latest
     steps:
-      #- name: Checkout
-      #  uses: actions/checkout@v3
-      - name: Install PyTabular
-        run: python3 -m pip install python-tabular
-      - name: Run Python Script
-        run: python3 readfile.py
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install SQL Server
+        uses: Curts0/install-sql-server-action@refs/heads/main
+        with:
+          connection-string-env-var: SQL_SERVER_CONNECTION_STRING
+          catalog: AdventureWorksDW
+      - name: Run SQL File
+        run: sqlcmd -i .\adventureworks\instawdbdw.sql -I
+      - name: Query New DB
+        run: sqlcmd -Q "SELECT TOP 100 * FROM [AdventureWorksDW].[dbo].[FactCallCenter]"
