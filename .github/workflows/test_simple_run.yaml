@@ -5,5 +5,5 @@ jobs:
   PythonRun:
     runs-on: windows-latest
     steps:
-      - name: Execute Python
-        run: python3 readfile.py
+      - name: Run DIR
+        run: dir
