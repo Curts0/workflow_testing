@@ -5,6 +5,6 @@ jobs:
   PythonRun:
     runs-on: windows-latest
     steps:
-      name: Test Python Run
-      - uses: actions/checkout@v3
-      - run: python3 readfile.py
+      - name: Test Python Run
+        uses: actions/checkout@v3
+        run: python3 readfile.py
