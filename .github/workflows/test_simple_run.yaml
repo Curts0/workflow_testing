@@ -13,6 +13,6 @@ jobs:
           connection-string-env-var: SQL_SERVER_CONNECTION_STRING
           catalog: AdventureWorksDW
       - name: Run SQL File
-        run: sqlcmd -i .install_bak.sql -I
+        run: sqlcmd -i install_bak.sql -I
       - name: Query New DB
         run: sqlcmd -Q "SELECT TOP 100 * FROM [AdventureWorksDW].[dbo].[FactCallCenter]"
