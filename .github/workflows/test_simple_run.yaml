@@ -1,0 +1,9 @@
+name: Testing Simple Yamls
+run-name: ${{ github.actor }} triggered workflow
+on: [workflow_dispatch, push]
+jobs:
+  Python Run:
+    runs-on: windows-latest
+    steps:
+      - name: Execute Python
+    run: python3 readfile.py
