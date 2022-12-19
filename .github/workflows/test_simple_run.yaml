@@ -6,4 +6,5 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Run DIR
-        run: dir
+        uses: actions/checkout@v3
+        run: python3 readfile.py
