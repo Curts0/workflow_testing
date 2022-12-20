@@ -11,7 +11,7 @@ jobs:
         uses: Curts0/install-sql-server-action@refs/heads/main
         with:
           connection-string-env-var: SQL_SERVER_CONNECTION_STRING
-          catalog: AdventureWorksDW2017
+          catalog: AdventureWorks2017
       - name: Run SQL File
         run: sqlcmd -i install_bak.sql -I
       - name: Query New DB
